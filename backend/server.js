@@ -52,6 +52,19 @@ app.use('/api/reviews', reviewRoutes);
 app.use('/api/admin', adminRoutes);
 app.use('/api/coupons', couponRoutes);
 
+// Serve Frontend static assets in production if built
+const fs = require('fs');
+const frontendDistPath = path.join(__dirname, '../frontend/dist');
+if (fs.existsSync(frontendDistPath)) {
+  app.use(express.static(frontendDistPath));
+  app.get('*', (req, res, next) => {
+    if (req.originalUrl.startsWith('/api')) {
+      return next();
+    }
+    res.sendFile(path.resolve(frontendDistPath, 'index.html'));
+  });
+}
+
 // Error Handling Middlewares
 app.use(notFound);
 app.use(errorHandler);

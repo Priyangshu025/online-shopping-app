@@ -1,0 +1,21 @@
+services:
+  # Option 1: Single Unified Fullstack Web Service (Recommended for Render Free Tier)
+  - type: web
+    name: shopnova-ecommerce
+    env: node
+    plan: free
+    buildCommand: npm run build
+    startCommand: npm start
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: PORT
+        value: 10000
+      - key: JWT_SECRET
+        generateValue: true
+      - key: RAZORPAY_KEY_ID
+        value: rzp_test_ecomSample123
+      - key: RAZORPAY_KEY_SECRET
+        value: rzp_test_secretKeyABC456
+      - key: MONGODB_URI
+        sync: false
