@@ -1,0 +1,16 @@
+[
+  {
+    "_id": "id_1794314661974_hu96zmo",
+    "userId": "usr_cust_001",
+    "items": [],
+    "createdAt": "2026-11-10T12:44:21.974Z",
+    "updatedAt": "2026-11-10T12:45:22.039Z"
+  },
+  {
+    "_id": "id_1794314501341_y2afp9w",
+    "userId": "usr_admin_001",
+    "items": [],
+    "createdAt": "2026-11-10T12:41:41.341Z",
+    "updatedAt": "2026-11-10T12:41:41.341Z"
+  }
+]

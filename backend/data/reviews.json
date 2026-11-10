@@ -1,0 +1,22 @@
+[
+  {
+    "_id": "rev_001",
+    "userId": "usr_cust_001",
+    "userName": "Priya Sharma",
+    "productId": "prod_001",
+    "rating": 5,
+    "comment": "Superb sound quality! Noise cancellation is easily the best in class. Battery lasts multiple days of work and calls.",
+    "verifiedPurchase": true,
+    "createdAt": "2026-11-05T12:36:54.801Z"
+  },
+  {
+    "_id": "rev_002",
+    "userId": "usr_cust_001",
+    "userName": "Priya Sharma",
+    "productId": "prod_003",
+    "rating": 5,
+    "comment": "The magnetic scroll wheel and ergonomic thumb rest make long coding sessions effortless.",
+    "verifiedPurchase": true,
+    "createdAt": "2026-11-07T12:36:54.801Z"
+  }
+]

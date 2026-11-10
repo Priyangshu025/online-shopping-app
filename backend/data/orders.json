@@ -1,0 +1,246 @@
+[
+  {
+    "_id": "id_1794314722014_tedo98v",
+    "userId": "usr_cust_001",
+    "userName": "Priya Sharma",
+    "userEmail": "customer@shopnova.com",
+    "trackingNumber": "ORD-722013-2102",
+    "items": [
+      {
+        "productId": "prod_004",
+        "name": "Keychron K2 Wireless Mechanical Keyboard (Version 2)",
+        "price": 7299,
+        "quantity": 1,
+        "image": "https://images.unsplash.com/photo-1587829741301-dc798b83add3?w=800&auto=format&fit=crop&q=80",
+        "brand": "Keychron"
+      },
+      {
+        "productId": "prod_001",
+        "name": "Sony WH-1000XM5 Wireless Noise-Cancelling Headphones",
+        "price": 26990,
+        "quantity": 1,
+        "image": "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=800&auto=format&fit=crop&q=80",
+        "brand": "Sony"
+      }
+    ],
+    "shippingAddress": {
+      "recipient": "Priya Sharma",
+      "phone": "+91 91234 56789",
+      "addressLines": "Flat 402, Sunshine Apartments, Indiranagar",
+      "city": "Bengaluru",
+      "state": "Karnataka",
+      "postalCode": "560038"
+    },
+    "totals": {
+      "subtotal": 34289,
+      "discount": 0,
+      "deliveryCharge": 0,
+      "tax": 3429,
+      "finalTotal": 37718
+    },
+    "paymentMethod": "Cash on Delivery",
+    "paymentStatus": "Pending",
+    "orderStatus": "Order Placed",
+    "statusTimeline": [
+      {
+        "status": "Order Placed",
+        "timestamp": "2026-11-10T12:45:22.013Z",
+        "comment": "Order placed successfully using Cash on Delivery."
+      }
+    ],
+    "paymentDetails": {
+      "gateway": "COD",
+      "gatewayOrderId": "pay_fwcecjh8",
+      "transactionId": "txn_1794314722013",
+      "signature": "sig_c8w3wq0g2p"
+    },
+    "createdAt": "2026-11-10T12:45:22.014Z",
+    "updatedAt": "2026-11-10T12:45:22.014Z"
+  },
+  {
+    "_id": "id_1794314691657_n8yljho",
+    "userId": "usr_cust_001",
+    "userName": "Priya Sharma",
+    "userEmail": "customer@shopnova.com",
+    "trackingNumber": "ORD-691655-3357",
+    "items": [
+      {
+        "productId": "prod_007",
+        "name": "Fujifilm X-T30 II Mirrorless Digital Camera with 18-55mm Lens",
+        "price": 84999,
+        "quantity": 2,
+        "image": "https://images.unsplash.com/photo-1516035069371-29a1b244cc32?w=800&auto=format&fit=crop&q=80",
+        "brand": "Fujifilm"
+      }
+    ],
+    "shippingAddress": {
+      "recipient": "Priya Sharma",
+      "phone": "+91 91234 56789",
+      "addressLines": "Flat 402, Sunshine Apartments, Indiranagar",
+      "city": "Bengaluru",
+      "state": "Karnataka",
+      "postalCode": "560038"
+    },
+    "totals": {
+      "subtotal": 169998,
+      "discount": 0,
+      "deliveryCharge": 0,
+      "tax": 17000,
+      "finalTotal": 186998
+    },
+    "paymentMethod": "Cash on Delivery",
+    "paymentStatus": "Pending",
+    "orderStatus": "Order Placed",
+    "statusTimeline": [
+      {
+        "status": "Order Placed",
+        "timestamp": "2026-11-10T12:44:51.655Z",
+        "comment": "Order placed successfully using Cash on Delivery."
+      }
+    ],
+    "paymentDetails": {
+      "gateway": "COD",
+      "gatewayOrderId": "pay_xwzcpcp3",
+      "transactionId": "txn_1794314691655",
+      "signature": "sig_zkph3weo54"
+    },
+    "createdAt": "2026-11-10T12:44:51.657Z",
+    "updatedAt": "2026-11-10T12:44:51.657Z"
+  },
+  {
+    "_id": "ord_demo_001",
+    "userId": "usr_cust_001",
+    "userName": "Priya Sharma",
+    "userEmail": "customer@shopnova.com",
+    "trackingNumber": "ORD-849201-3912",
+    "items": [
+      {
+        "productId": "prod_001",
+        "name": "Sony WH-1000XM5 Wireless Noise-Cancelling Headphones",
+        "price": 26990,
+        "quantity": 1,
+        "image": "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=800&auto=format&fit=crop&q=80",
+        "brand": "Sony"
+      }
+    ],
+    "shippingAddress": {
+      "recipient": "Priya Sharma",
+      "phone": "+91 91234 56789",
+      "addressLines": "Flat 402, Sunshine Apartments, Indiranagar",
+      "city": "Bengaluru",
+      "state": "Karnataka",
+      "postalCode": "560038"
+    },
+    "totals": {
+      "subtotal": 26990,
+      "discount": 1000,
+      "couponCode": "WELCOME10",
+      "deliveryCharge": 0,
+      "tax": 2599,
+      "finalTotal": 28589
+    },
+    "paymentMethod": "Razorpay",
+    "paymentStatus": "Completed",
+    "orderStatus": "Delivered",
+    "createdAt": "2026-11-03T12:36:54.801Z",
+    "statusTimeline": [
+      {
+        "status": "Order Placed",
+        "timestamp": "2026-11-03T12:36:54.801Z",
+        "comment": "Order placed via Razorpay"
+      },
+      {
+        "status": "Processing",
+        "timestamp": "2026-11-04T12:36:54.801Z",
+        "comment": "Items packaged and ready"
+      },
+      {
+        "status": "Shipped",
+        "timestamp": "2026-11-05T12:36:54.801Z",
+        "comment": "Dispatched via BlueDart Express"
+      },
+      {
+        "status": "Out for Delivery",
+        "timestamp": "2026-11-06T12:36:54.801Z",
+        "comment": "Courier agent on the way"
+      },
+      {
+        "status": "Delivered",
+        "timestamp": "2026-11-07T12:36:54.801Z",
+        "comment": "Delivered to recipient with signature confirmation"
+      }
+    ],
+    "paymentDetails": {
+      "gateway": "Razorpay",
+      "gatewayOrderId": "order_test_9831",
+      "transactionId": "txn_9831412",
+      "signature": "sig_verified_mock"
+    }
+  },
+  {
+    "_id": "ord_demo_002",
+    "userId": "usr_cust_001",
+    "userName": "Priya Sharma",
+    "userEmail": "customer@shopnova.com",
+    "trackingNumber": "ORD-519283-7721",
+    "items": [
+      {
+        "productId": "prod_003",
+        "name": "Logitech MX Master 3S Wireless Performance Mouse",
+        "price": 8495,
+        "quantity": 1,
+        "image": "https://images.unsplash.com/photo-1615663245857-ac93bb7c39e7?w=800&auto=format&fit=crop&q=80",
+        "brand": "Logitech"
+      }
+    ],
+    "shippingAddress": {
+      "recipient": "Priya Sharma",
+      "phone": "+91 91234 56789",
+      "addressLines": "Flat 402, Sunshine Apartments, Indiranagar",
+      "city": "Bengaluru",
+      "state": "Karnataka",
+      "postalCode": "560038"
+    },
+    "totals": {
+      "subtotal": 8495,
+      "discount": 0,
+      "couponCode": "",
+      "deliveryCharge": 0,
+      "tax": 850,
+      "finalTotal": 9345
+    },
+    "paymentMethod": "UPI",
+    "paymentStatus": "Completed",
+    "orderStatus": "Out for Delivery",
+    "createdAt": "2026-11-09T12:36:54.801Z",
+    "statusTimeline": [
+      {
+        "status": "Order Placed",
+        "timestamp": "2026-11-09T12:36:54.801Z",
+        "comment": "Order placed via UPI"
+      },
+      {
+        "status": "Processing",
+        "timestamp": "2026-11-09T16:36:54.801Z",
+        "comment": "Order verified and packed"
+      },
+      {
+        "status": "Shipped",
+        "timestamp": "2026-11-10T04:36:54.801Z",
+        "comment": "In transit to local hub"
+      },
+      {
+        "status": "Out for Delivery",
+        "timestamp": "2026-11-10T12:43:24.179Z",
+        "comment": "Order status updated to Out for Delivery by Admin."
+      }
+    ],
+    "paymentDetails": {
+      "gateway": "Razorpay",
+      "gatewayOrderId": "order_test_9832",
+      "transactionId": "txn_9832811",
+      "signature": "sig_verified_mock"
+    },
+    "updatedAt": "2026-11-10T12:43:24.181Z"
+  }
+]

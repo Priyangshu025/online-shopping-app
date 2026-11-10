@@ -1,0 +1,29 @@
+[
+  {
+    "_id": "cpn_001",
+    "code": "WELCOME10",
+    "discountPercent": 10,
+    "maxDiscount": 1000,
+    "minOrderValue": 1500,
+    "expiryDate": "2027-01-09T12:36:54.799Z",
+    "isActive": true
+  },
+  {
+    "_id": "cpn_002",
+    "code": "FESTIVE20",
+    "discountPercent": 20,
+    "maxDiscount": 2500,
+    "minOrderValue": 5000,
+    "expiryDate": "2026-12-10T12:36:54.801Z",
+    "isActive": true
+  },
+  {
+    "_id": "cpn_003",
+    "code": "SUPER500",
+    "discountPercent": 15,
+    "maxDiscount": 500,
+    "minOrderValue": 2000,
+    "expiryDate": "2026-12-25T12:36:54.801Z",
+    "isActive": true
+  }
+]

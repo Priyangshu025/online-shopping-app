@@ -1,0 +1,15 @@
+{
+  "name": "shopnova-online-shopping-app",
+  "version": "1.0.0",
+  "description": "Full-Stack MERN E-Commerce Web Application built according to project planning guidelines",
+  "scripts": {
+    "server": "npm --prefix backend run dev",
+    "client": "npm --prefix frontend run dev",
+    "seed": "npm --prefix backend run seed",
+    "build:client": "npm --prefix frontend run build"
+  },
+  "keywords": ["ecommerce", "react", "express", "mongodb", "razorpay"],
+  "author": "",
+  "license": "ISC"
+}
+

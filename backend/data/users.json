@@ -1,0 +1,43 @@
+[
+  {
+    "_id": "usr_admin_001",
+    "name": "System Admin",
+    "email": "admin@shopnova.com",
+    "password": "$2a$10$WCj7DGZcoDOxBWSzFBoOweLtbHOLjan6zBb0f33EERpjQj/DdL2o6",
+    "phone": "+91 98765 43210",
+    "role": "admin",
+    "addresses": [
+      {
+        "recipient": "Admin HQ",
+        "phone": "+91 98765 43210",
+        "addressLines": "Tech Park, Block B, 4th Floor",
+        "city": "Bengaluru",
+        "state": "Karnataka",
+        "postalCode": "560001",
+        "isDefault": true
+      }
+    ],
+    "wishlist": []
+  },
+  {
+    "_id": "usr_cust_001",
+    "name": "Priya Sharma",
+    "email": "customer@shopnova.com",
+    "password": "$2a$10$WCj7DGZcoDOxBWSzFBoOweQBbXsvka5h2yLV6ZqFjAtxRHR8Q60y6",
+    "phone": "+91 91234 56789",
+    "role": "customer",
+    "addresses": [
+      {
+        "recipient": "Priya Sharma",
+        "phone": "+91 91234 56789",
+        "addressLines": "Flat 402, Sunshine Apartments, Indiranagar",
+        "city": "Bengaluru",
+        "state": "Karnataka",
+        "postalCode": "560038",
+        "isDefault": true
+      }
+    ],
+    "wishlist": [],
+    "updatedAt": "2026-11-10T12:45:03.223Z"
+  }
+]
