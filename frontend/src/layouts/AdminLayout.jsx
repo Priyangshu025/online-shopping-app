@@ -1,38 +1,40 @@
 import React from 'react';
-import { Outlet, Navigate, Link } from 'react-router-dom';
+import { Outlet, Link } from 'react-router-dom';
 import AdminSidebar from '../components/admin/AdminSidebar';
 import { useAuth } from '../context/AuthContext';
-import { ShieldAlert, Bell, User } from 'lucide-react';
+import { ShieldAlert } from 'lucide-react';
+import LinkButton from '../components/ui/LinkButton';
 
 const AdminLayout = () => {
   const { user, loading, isAdmin } = useAuth();
 
   if (loading) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-slate-100">
-        <div className="animate-spin rounded-full h-10 w-10 border-b-2 border-blue-600"></div>
+      <div className="min-h-screen flex items-center justify-center bg-surface">
+        <div className="w-8 h-8 rounded-full border-2 border-accent border-t-transparent animate-spin" />
       </div>
     );
   }
 
   if (!isAdmin) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-slate-50 p-4">
-        <div className="max-w-md w-full bg-white p-8 rounded-3xl border border-slate-200 text-center space-y-4 shadow-xl">
-          <div className="w-16 h-16 bg-rose-100 text-rose-600 rounded-2xl flex items-center justify-center mx-auto">
-            <ShieldAlert className="w-8 h-8" />
+      <div className="min-h-screen flex items-center justify-center bg-surface-alt p-4">
+        <div className="max-w-md w-full bg-surface p-8 sm:p-10 rounded-card border border-line text-center space-y-4 shadow-card">
+          <div className="w-14 h-14 bg-surface-alt text-ink-muted rounded-full flex items-center justify-center mx-auto border border-line">
+            <ShieldAlert className="w-7 h-7 text-danger" />
           </div>
-          <h2 className="text-xl font-bold text-slate-800">Administrator Access Required</h2>
-          <p className="text-sm text-slate-500">
-            You do not have permission to view the administration dashboard. Please sign in with an administrator account (e.g. <code>admin@shopnova.com</code>).
+          <h2 className="text-xl font-semibold text-ink">Administrator Access Required</h2>
+          <p className="text-sm text-ink-muted">
+            You do not have permission to view the administration dashboard. Please sign in with an administrator account.
           </p>
           <div className="pt-2">
-            <Link
+            <LinkButton
               to="/login"
-              className="inline-block px-5 py-2.5 bg-blue-600 hover:bg-blue-700 text-white font-semibold text-sm rounded-xl transition-colors shadow-md shadow-blue-500/20"
+              variant="primary"
+              size="sm"
             >
-              Go to Login
-            </Link>
+              Sign in as Admin
+            </LinkButton>
           </div>
         </div>
       </div>
@@ -40,31 +42,29 @@ const AdminLayout = () => {
   }
 
   return (
-    <div className="flex min-h-screen bg-slate-50">
+    <div className="flex min-h-screen bg-surface-alt">
       <AdminSidebar />
       <div className="flex-1 flex flex-col min-w-0 overflow-hidden">
         {/* Admin Topbar */}
-        <header className="h-16 bg-white border-b border-slate-200 px-6 flex items-center justify-between">
+        <header className="h-14 bg-surface border-b border-line/60 px-6 sm:px-8 flex items-center justify-between">
           <div className="flex items-center gap-2">
-            <span className="inline-block w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse"></span>
-            <h1 className="font-bold text-slate-800 text-sm">Store Administration</h1>
+            <span className="inline-block w-2 h-2 rounded-full bg-success"></span>
+            <h1 className="font-semibold text-ink text-sm">Store Administration</h1>
           </div>
 
-          <div className="flex items-center gap-4">
-            <div className="flex items-center gap-3">
-              <div className="w-8 h-8 rounded-full bg-indigo-100 text-indigo-700 font-bold text-xs flex items-center justify-center">
-                {user?.name?.charAt(0) || 'A'}
-              </div>
-              <div className="text-left hidden sm:block">
-                <p className="text-xs font-bold text-slate-800 leading-tight">{user?.name}</p>
-                <p className="text-[10px] text-slate-400 capitalize">{user?.role} Role</p>
-              </div>
+          <div className="flex items-center gap-3">
+            <div className="w-7 h-7 rounded-full bg-surface-alt border border-line text-ink font-semibold text-xs flex items-center justify-center">
+              {user?.name?.charAt(0) || 'A'}
+            </div>
+            <div className="text-left hidden sm:block">
+              <p className="text-xs font-semibold text-ink leading-tight">{user?.name}</p>
+              <p className="text-[11px] text-ink-muted capitalize">{user?.role}</p>
             </div>
           </div>
         </header>
 
         {/* Admin Main Body */}
-        <main className="flex-1 p-6 overflow-y-auto">
+        <main className="flex-1 p-6 sm:p-8 overflow-y-auto">
           <Outlet />
         </main>
       </div>
@@ -73,4 +73,3 @@ const AdminLayout = () => {
 };
 
 export default AdminLayout;
-

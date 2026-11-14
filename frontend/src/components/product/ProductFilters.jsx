@@ -1,5 +1,5 @@
 import React from 'react';
-import { Filter, RotateCcw, Star } from 'lucide-react';
+import { RotateCcw, Star } from 'lucide-react';
 
 const ProductFilters = ({
   categories = [],
@@ -17,48 +17,46 @@ const ProductFilters = ({
   onResetFilters,
 }) => {
   return (
-    <div className="bg-white p-5 rounded-2xl border border-slate-200/80 shadow-sm space-y-6">
+    <div className="bg-surface p-6 rounded-card border border-line/60 space-y-6">
       
-      <div className="flex items-center justify-between pb-4 border-b border-slate-100">
-        <div className="flex items-center gap-2">
-          <Filter className="w-4 h-4 text-blue-600" />
-          <h3 className="font-bold text-slate-800 text-sm">Filter Products</h3>
-        </div>
+      {/* Title & Reset */}
+      <div className="flex items-center justify-between pb-4 border-b border-line/50">
+        <h3 className="font-semibold text-ink text-sm tracking-tight">Refine</h3>
         <button
           onClick={onResetFilters}
-          className="text-xs text-slate-400 hover:text-blue-600 flex items-center gap-1 transition-colors"
-          title="Reset Filters"
+          className="text-xs text-ink-muted hover:text-ink flex items-center gap-1 transition-colors"
+          title="Reset all filters"
         >
           <RotateCcw className="w-3 h-3" />
-          Reset
+          <span>Reset</span>
         </button>
       </div>
 
       {/* Category Filter */}
       <div>
-        <h4 className="text-xs font-semibold uppercase tracking-wider text-slate-400 mb-3">Category</h4>
-        <div className="space-y-1.5 max-h-48 overflow-y-auto pr-1">
+        <h4 className="text-xs font-semibold text-ink-muted mb-2.5">Category</h4>
+        <div className="flex flex-wrap gap-1.5">
           <button
             onClick={() => onCategoryChange('All')}
-            className={`w-full text-left text-xs px-3 py-2 rounded-xl transition-colors font-medium flex items-center justify-between ${
+            className={`px-3 py-1.5 rounded-full text-xs font-medium transition-colors ${
               selectedCategory === 'All'
-                ? 'bg-blue-50 text-blue-700 font-bold'
-                : 'text-slate-600 hover:bg-slate-50'
+                ? 'bg-ink text-white'
+                : 'bg-surface-alt text-ink hover:bg-surface-alt/80 border border-line/50'
             }`}
           >
-            <span>All Categories</span>
+            All
           </button>
           {categories.map((cat) => (
             <button
               key={cat}
               onClick={() => onCategoryChange(cat)}
-              className={`w-full text-left text-xs px-3 py-2 rounded-xl transition-colors font-medium flex items-center justify-between ${
+              className={`px-3 py-1.5 rounded-full text-xs font-medium transition-colors ${
                 selectedCategory === cat
-                  ? 'bg-blue-50 text-blue-700 font-bold'
-                  : 'text-slate-600 hover:bg-slate-50'
+                  ? 'bg-ink text-white'
+                  : 'bg-surface-alt text-ink hover:bg-surface-alt/80 border border-line/50'
               }`}
             >
-              <span>{cat}</span>
+              {cat}
             </button>
           ))}
         </div>
@@ -66,13 +64,13 @@ const ProductFilters = ({
 
       {/* Brand Filter */}
       <div>
-        <h4 className="text-xs font-semibold uppercase tracking-wider text-slate-400 mb-3">Brand</h4>
+        <h4 className="text-xs font-semibold text-ink-muted mb-2">Brand</h4>
         <select
           value={selectedBrand}
           onChange={(e) => onBrandChange(e.target.value)}
-          className="w-full text-xs bg-slate-50 border border-slate-200 rounded-xl px-3 py-2.5 text-slate-700 focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500"
+          className="w-full text-sm bg-surface-alt border border-line rounded-lg px-3 py-2 text-ink focus:outline-none focus:border-accent"
         >
-          <option value="All">All Brands</option>
+          <option value="All">All brands</option>
           {brands.map((b) => (
             <option key={b} value={b}>
               {b}
@@ -83,71 +81,71 @@ const ProductFilters = ({
 
       {/* Price Range Filter */}
       <div>
-        <h4 className="text-xs font-semibold uppercase tracking-wider text-slate-400 mb-3">Price Range (₹)</h4>
+        <h4 className="text-xs font-semibold text-ink-muted mb-2">Price (₹)</h4>
         <div className="grid grid-cols-2 gap-2">
           <div>
-            <label className="text-[10px] text-slate-400 block mb-1">Min Price</label>
+            <label className="text-[11px] text-ink-muted block mb-1">Min</label>
             <input
               type="number"
               placeholder="0"
               value={priceRange.min}
               onChange={(e) => onPriceChange('min', e.target.value)}
-              className="w-full text-xs bg-slate-50 border border-slate-200 rounded-lg px-2.5 py-1.5 text-slate-700 focus:outline-none focus:ring-1 focus:ring-blue-500"
+              className="w-full text-sm bg-surface-alt border border-line rounded-lg px-3 py-1.5 text-ink focus:outline-none focus:border-accent"
             />
           </div>
           <div>
-            <label className="text-[10px] text-slate-400 block mb-1">Max Price</label>
+            <label className="text-[11px] text-ink-muted block mb-1">Max</label>
             <input
               type="number"
               placeholder="100000"
               value={priceRange.max}
               onChange={(e) => onPriceChange('max', e.target.value)}
-              className="w-full text-xs bg-slate-50 border border-slate-200 rounded-lg px-2.5 py-1.5 text-slate-700 focus:outline-none focus:ring-1 focus:ring-blue-500"
+              className="w-full text-sm bg-surface-alt border border-line rounded-lg px-3 py-1.5 text-ink focus:outline-none focus:border-accent"
             />
           </div>
         </div>
       </div>
 
-      {/* Rating Filter */}
+      {/* Minimum Rating */}
       <div>
-        <h4 className="text-xs font-semibold uppercase tracking-wider text-slate-400 mb-3">Customer Rating</h4>
-        <div className="space-y-1.5">
-          {[4, 3, 2].map((stars) => (
+        <h4 className="text-xs font-semibold text-ink-muted mb-2">Customer rating</h4>
+        <div className="space-y-1">
+          {[4, 3].map((stars) => (
             <button
               key={stars}
               onClick={() => onRatingChange(minRating === stars ? 0 : stars)}
-              className={`w-full text-left text-xs px-3 py-1.5 rounded-xl transition-colors flex items-center gap-1.5 ${
+              className={`w-full text-left text-xs px-3 py-1.5 rounded-lg transition-colors flex items-center justify-between ${
                 minRating === stars
-                  ? 'bg-amber-50 text-amber-900 font-semibold'
-                  : 'text-slate-600 hover:bg-slate-50'
+                  ? 'bg-ink text-white font-medium'
+                  : 'text-ink hover:bg-surface-alt'
               }`}
             >
-              <div className="flex items-center text-amber-400">
+              <div className="flex items-center gap-1">
                 {[...Array(5)].map((_, i) => (
                   <Star
                     key={i}
                     className={`w-3 h-3 ${
-                      i < stars ? 'fill-amber-400 stroke-amber-400' : 'text-slate-200'
+                      i < stars ? 'fill-amber-400 stroke-amber-400' : 'text-line stroke-line'
                     }`}
                   />
                 ))}
               </div>
-              <span className="text-[11px]">& up</span>
+              <span className="text-[11px] text-ink-muted">{stars}★ & up</span>
             </button>
           ))}
         </div>
       </div>
 
-      {/* Availability */}
-      <div className="pt-2 border-t border-slate-100">
-        <label className="flex items-center gap-2 cursor-pointer text-xs font-medium text-slate-700">
+      {/* In Stock toggle */}
+      <div className="pt-2 border-t border-line/50">
+        <label className="flex items-center gap-2 cursor-pointer text-xs font-medium text-ink">
           <input
             type="checkbox"
             checked={inStockOnly}
             onChange={(e) => onInStockChange(e.target.checked)}
-            className="w-4 h-4 rounded border-slate-300 text-blue-600 focus:ring-blue-500"
+            className="w-4 h-4 rounded border-line text-accent focus:ring-accent"
           />
-          <span>In Stock Items Only</span>
+          <span>In stock items only</span>
         </label>
       </div>
 
@@ -156,4 +154,3 @@ const ProductFilters = ({
 };
 
 export default ProductFilters;
-

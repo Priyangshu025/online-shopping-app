@@ -12,11 +12,11 @@ const OrderStatusTimeline = ({ currentStatus, timeline = [] }) => {
 
   if (currentStatus === 'Cancelled') {
     return (
-      <div className="p-4 bg-rose-50 border border-rose-200 rounded-2xl flex items-center gap-3 text-rose-800">
-        <AlertCircle className="w-5 h-5 flex-shrink-0 text-rose-600" />
+      <div className="p-5 bg-rose-50 border border-danger/20 rounded-card flex items-center gap-3 text-ink">
+        <AlertCircle className="w-5 h-5 flex-shrink-0 text-danger" />
         <div>
-          <h4 className="text-sm font-bold">This Order was Cancelled</h4>
-          <p className="text-xs text-rose-600">The order was cancelled and inventory was returned to the catalog.</p>
+          <h4 className="text-sm font-semibold text-danger">Order Cancelled</h4>
+          <p className="text-xs text-ink-muted mt-0.5">This order was cancelled and any stock has been restored.</p>
         </div>
       </div>
     );
@@ -26,14 +26,14 @@ const OrderStatusTimeline = ({ currentStatus, timeline = [] }) => {
   const activeStep = currentIndex === -1 ? 0 : currentIndex;
 
   return (
-    <div className="py-6 px-4 bg-white rounded-2xl border border-slate-200/80 shadow-sm">
-      <h4 className="text-xs font-semibold uppercase tracking-wider text-slate-400 mb-6">Delivery Tracking</h4>
+    <div className="py-6 px-6 bg-surface-alt rounded-card border border-line/60">
+      <h3 className="text-xs font-semibold text-ink-muted uppercase tracking-wider mb-6">Delivery Tracking</h3>
 
       <div className="relative">
         {/* Connecting line */}
-        <div className="hidden sm:block absolute top-1/2 left-8 right-8 -translate-y-1/2 h-1 bg-slate-100 z-0">
+        <div className="hidden sm:block absolute top-5 left-8 right-8 h-0.5 bg-line z-0">
           <div
-            className="h-full bg-blue-600 transition-all duration-700"
+            className="h-full bg-accent transition-all duration-500"
             style={{ width: `${(activeStep / (steps.length - 1)) * 100}%` }}
           />
         </div>
@@ -44,8 +44,6 @@ const OrderStatusTimeline = ({ currentStatus, timeline = [] }) => {
             const Icon = step.icon;
             const isCompleted = idx < activeStep;
             const isCurrent = idx === activeStep;
-
-            // Find matching event in timeline history
             const historyEvent = timeline.find(t => t.status === step.key);
 
             return (
@@ -53,29 +51,27 @@ const OrderStatusTimeline = ({ currentStatus, timeline = [] }) => {
                 
                 {/* Node icon circle */}
                 <div
-                  className={`w-10 h-10 rounded-full flex items-center justify-center transition-all ${
+                  className={`w-9 h-9 rounded-full flex items-center justify-center transition-colors ${
                     isCompleted
-                      ? 'bg-blue-600 text-white shadow-md shadow-blue-500/20'
+                      ? 'bg-accent text-white'
                       : isCurrent
-                      ? 'bg-blue-600 text-white ring-4 ring-blue-100 shadow-lg'
-                      : 'bg-slate-100 text-slate-400'
+                      ? 'bg-accent text-white ring-4 ring-accent/20'
+                      : 'bg-white border border-line text-ink-muted'
                   }`}
                 >
-                  {isCompleted ? <Check className="w-4 h-4 stroke-[3]" /> : <Icon className="w-4 h-4" />}
+                  {isCompleted ? <Check className="w-4 h-4 stroke-[2.5]" /> : <Icon className="w-4 h-4" />}
                 </div>
 
                 {/* Text details */}
                 <div className="text-left sm:text-center">
-                  <p className={`text-xs font-bold ${isCurrent ? 'text-blue-600' : isCompleted ? 'text-slate-800' : 'text-slate-400'}`}>
+                  <p className={`text-xs font-medium ${isCurrent ? 'text-accent font-semibold' : isCompleted ? 'text-ink' : 'text-ink-muted'}`}>
                     {step.label}
                   </p>
                   {historyEvent && (
-                    <p className="text-[10px] text-slate-400">
+                    <p className="text-[11px] text-ink-muted">
                       {new Date(historyEvent.timestamp).toLocaleDateString('en-IN', {
                         month: 'short',
                         day: 'numeric',
-                        hour: '2-digit',
-                        minute: '2-digit',
                       })}
                     </p>
                   )}
@@ -91,4 +87,3 @@ const OrderStatusTimeline = ({ currentStatus, timeline = [] }) => {
 };
 
 export default OrderStatusTimeline;
-

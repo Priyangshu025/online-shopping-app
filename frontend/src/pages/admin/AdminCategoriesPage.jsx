@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { FolderTree, Plus, Trash2 } from 'lucide-react';
 import api from '../../services/api';
 import toast from 'react-hot-toast';
+import Button from '../../components/ui/Button';
 
 const AdminCategoriesPage = () => {
   const [categories, setCategories] = useState([]);
@@ -54,77 +55,81 @@ const AdminCategoriesPage = () => {
   return (
     <div className="space-y-6">
       <div>
-        <h1 className="text-2xl font-black text-slate-900 tracking-tight">Categories Management</h1>
-        <p className="text-xs text-slate-500 mt-1">Organize catalogue sections and visual storefront tiles</p>
+        <h1 className="text-2xl font-bold text-ink tracking-tight">Categories Management</h1>
+        <p className="text-sm text-ink-muted mt-1">Organize catalogue sections and visual storefront tiles</p>
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         {/* Create form */}
-        <div className="bg-white p-6 rounded-3xl border border-slate-200/80 shadow-sm space-y-4 lg:col-span-1">
-          <h3 className="font-bold text-slate-800 text-sm">Add New Category</h3>
-          <form onSubmit={handleAdd} className="space-y-3 text-xs">
+        <div className="bg-surface p-6 rounded-card border border-line shadow-card space-y-4 lg:col-span-1">
+          <h3 className="font-semibold text-ink text-base">Add New Category</h3>
+          <form onSubmit={handleAdd} className="space-y-3.5 text-xs">
             <div>
-              <label className="font-semibold text-slate-600 block mb-1">Category Title</label>
+              <label className="font-semibold text-ink block mb-1">Category Title</label>
               <input
                 type="text"
                 placeholder="e.g. Smart Audio"
                 value={newCat.categoryName}
                 onChange={(e) => setNewCat({ ...newCat, categoryName: e.target.value })}
                 required
-                className="w-full p-2.5 bg-slate-50 border border-slate-200 rounded-xl"
+                className="w-full px-3.5 py-2.5 bg-surface-alt border border-line rounded-xl text-ink text-sm focus:outline-none focus:ring-2 focus:ring-accent/20 focus:border-accent"
               />
             </div>
             <div>
-              <label className="font-semibold text-slate-600 block mb-1">Description</label>
+              <label className="font-semibold text-ink block mb-1">Description</label>
               <input
                 type="text"
                 placeholder="Brief category summary"
                 value={newCat.description}
                 onChange={(e) => setNewCat({ ...newCat, description: e.target.value })}
-                className="w-full p-2.5 bg-slate-50 border border-slate-200 rounded-xl"
+                className="w-full px-3.5 py-2.5 bg-surface-alt border border-line rounded-xl text-ink text-sm focus:outline-none focus:ring-2 focus:ring-accent/20 focus:border-accent"
               />
             </div>
             <div>
-              <label className="font-semibold text-slate-600 block mb-1">Cover Image URL</label>
+              <label className="font-semibold text-ink block mb-1">Cover Image URL</label>
               <input
                 type="url"
                 placeholder="https://images.unsplash.com/..."
                 value={newCat.image}
                 onChange={(e) => setNewCat({ ...newCat, image: e.target.value })}
-                className="w-full p-2.5 bg-slate-50 border border-slate-200 rounded-xl"
+                className="w-full px-3.5 py-2.5 bg-surface-alt border border-line rounded-xl text-ink text-sm focus:outline-none focus:ring-2 focus:ring-accent/20 focus:border-accent"
               />
             </div>
-            <button
+            <Button
               type="submit"
-              className="w-full py-2.5 bg-blue-600 hover:bg-blue-700 text-white font-bold rounded-xl shadow transition-colors"
+              variant="primary"
+              className="w-full justify-center"
             >
               Save Category
-            </button>
+            </Button>
           </form>
         </div>
 
         {/* Existing Categories */}
-        <div className="bg-white p-6 rounded-3xl border border-slate-200/80 shadow-sm lg:col-span-2 space-y-4">
-          <h3 className="font-bold text-slate-800 text-sm">Active Categories ({categories.length})</h3>
+        <div className="bg-surface p-6 rounded-card border border-line shadow-card lg:col-span-2 space-y-4">
+          <h3 className="font-semibold text-ink text-base">Active Categories ({categories.length})</h3>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             {categories.map((cat) => (
-              <div key={cat._id} className="p-3 bg-slate-50 rounded-2xl border border-slate-100 flex items-center justify-between text-xs">
+              <div key={cat._id} className="p-3.5 bg-surface-alt rounded-2xl border border-line/60 flex items-center justify-between text-xs hover:border-line transition-colors">
                 <div className="flex items-center gap-3">
                   {cat.image ? (
-                    <img src={cat.image} alt="" className="w-10 h-10 rounded-xl object-cover" />
+                    <div className="w-11 h-11 rounded-xl bg-surface border border-line/60 p-1 flex items-center justify-center flex-shrink-0">
+                      <img src={cat.image} alt="" className="max-h-full max-w-full object-contain" />
+                    </div>
                   ) : (
-                    <div className="w-10 h-10 rounded-xl bg-blue-100 text-blue-600 flex items-center justify-center font-bold">
+                    <div className="w-11 h-11 rounded-xl bg-accent-soft text-accent flex items-center justify-center font-bold text-sm">
                       {cat.categoryName?.charAt(0)}
                     </div>
                   )}
                   <div>
-                    <p className="font-bold text-slate-800">{cat.categoryName}</p>
-                    <p className="text-[10px] text-slate-400">{cat.slug}</p>
+                    <p className="font-semibold text-ink text-sm">{cat.categoryName}</p>
+                    <p className="text-[11px] text-ink-muted">{cat.slug}</p>
                   </div>
                 </div>
                 <button
                   onClick={() => handleDelete(cat._id)}
-                  className="p-1.5 text-slate-400 hover:text-rose-600 rounded-lg"
+                  className="p-1.5 text-ink-muted hover:text-danger hover:bg-danger/10 rounded-lg transition-colors"
+                  aria-label="Delete category"
                 >
                   <Trash2 className="w-4 h-4" />
                 </button>

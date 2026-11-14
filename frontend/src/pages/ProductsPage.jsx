@@ -3,7 +3,8 @@ import { useSearchParams } from 'react-router-dom';
 import api from '../services/api';
 import ProductCard from '../components/product/ProductCard';
 import ProductFilters from '../components/product/ProductFilters';
-import { SlidersHorizontal, ArrowUpDown, X, PackageX } from 'lucide-react';
+import { SlidersHorizontal, ArrowUpDown, X, PackageOpen } from 'lucide-react';
+import Button from '../components/ui/Button';
 
 const ProductsPage = () => {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -13,7 +14,7 @@ const ProductsPage = () => {
   const [brands, setBrands] = useState([]);
   const [mobileFilterOpen, setMobileFilterOpen] = useState(false);
 
-  // Filter States initialized from URL or defaults
+  // Filter States
   const currentCategory = searchParams.get('category') || 'All';
   const currentBrand = searchParams.get('brand') || 'All';
   const currentSearch = searchParams.get('search') || '';
@@ -26,7 +27,6 @@ const ProductsPage = () => {
     max: searchParams.get('maxPrice') || '',
   });
 
-  // Fetch filter metadata (categories, brands)
   useEffect(() => {
     const fetchMeta = async () => {
       try {
@@ -42,7 +42,6 @@ const ProductsPage = () => {
     fetchMeta();
   }, []);
 
-  // Fetch filtered products
   useEffect(() => {
     const fetchProducts = async () => {
       setLoading(true);
@@ -88,41 +87,45 @@ const ProductsPage = () => {
   };
 
   return (
-    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-6">
+    <div className="container-page py-10 sm:py-16 space-y-8">
       
       {/* Header & Controls */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-6 border-b border-slate-200">
+      <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 pb-6 border-b border-line/60">
         <div>
-          <h1 className="text-2xl sm:text-3xl font-black text-slate-900 tracking-tight">
-            {currentCategory !== 'All' ? currentCategory : currentSearch ? `Results for "${currentSearch}"` : 'All Products'}
+          <h1 className="text-3xl sm:text-4xl font-semibold text-ink tracking-tight">
+            {currentCategory !== 'All' 
+              ? currentCategory 
+              : currentSearch 
+              ? `Results for "${currentSearch}"` 
+              : 'All Products'}
           </h1>
-          <p className="text-xs text-slate-500 mt-1">
-            Showing <strong className="text-slate-800">{products.length}</strong> items matching your preferences
+          <p className="text-sm text-ink-muted mt-1">
+            {products.length} {products.length === 1 ? 'item' : 'items'} available
           </p>
         </div>
 
-        <div className="flex items-center gap-3 self-end sm:self-center">
+        <div className="flex items-center gap-3 self-start sm:self-auto">
           {/* Mobile Filter toggle */}
           <button
             onClick={() => setMobileFilterOpen(!mobileFilterOpen)}
-            className="lg:hidden flex items-center gap-2 px-3.5 py-2 bg-white border border-slate-200 rounded-xl text-xs font-semibold text-slate-700 shadow-sm"
+            className="lg:hidden flex items-center gap-2 px-4 py-2 bg-surface-alt border border-line rounded-full text-xs font-medium text-ink"
           >
             <SlidersHorizontal className="w-3.5 h-3.5" />
-            <span>Filters</span>
+            <span>Filter</span>
           </button>
 
           {/* Sort Dropdown */}
-          <div className="flex items-center gap-2 bg-white border border-slate-200 rounded-xl px-3 py-2 shadow-sm text-xs">
-            <ArrowUpDown className="w-3.5 h-3.5 text-slate-400" />
+          <div className="flex items-center gap-2 bg-surface-alt border border-line rounded-full px-3.5 py-1.5 text-xs">
+            <ArrowUpDown className="w-3.5 h-3.5 text-ink-muted" />
             <select
               value={currentSort}
               onChange={(e) => updateParam('sort', e.target.value)}
-              className="bg-transparent text-slate-700 font-semibold focus:outline-none cursor-pointer"
+              className="bg-transparent text-ink font-medium focus:outline-none cursor-pointer"
             >
-              <option value="newest">Newest Arrivals</option>
+              <option value="newest">Newest</option>
               <option value="price_asc">Price: Low to High</option>
               <option value="price_desc">Price: High to Low</option>
-              <option value="rating">Customer Rating</option>
+              <option value="rating">Top Rated</option>
             </select>
           </div>
         </div>
@@ -150,13 +153,17 @@ const ProductsPage = () => {
           />
         </aside>
 
-        {/* Mobile Filters Drawer Modal */}
+        {/* Mobile Filters Drawer */}
         {mobileFilterOpen && (
-          <div className="fixed inset-0 z-50 bg-black/50 lg:hidden flex justify-end">
-            <div className="w-80 bg-white h-full p-6 overflow-y-auto space-y-4">
-              <div className="flex items-center justify-between pb-3 border-b">
-                <h3 className="font-bold text-slate-800">Filters</h3>
-                <button onClick={() => setMobileFilterOpen(false)} className="p-1 text-slate-400">
+          <div className="fixed inset-0 z-50 bg-black/40 lg:hidden flex justify-end">
+            <div className="w-80 bg-surface h-full p-6 overflow-y-auto space-y-4 shadow-lift">
+              <div className="flex items-center justify-between pb-3 border-b border-line">
+                <h3 className="font-semibold text-ink">Filters</h3>
+                <button 
+                  onClick={() => setMobileFilterOpen(false)} 
+                  className="p-1 text-ink-muted hover:text-ink"
+                  aria-label="Close filters"
+                >
                   <X className="w-5 h-5" />
                 </button>
               </div>
@@ -184,24 +191,23 @@ const ProductsPage = () => {
           {loading ? (
             <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-6">
               {[...Array(6)].map((_, i) => (
-                <div key={i} className="h-80 bg-slate-100 rounded-2xl animate-pulse" />
+                <div key={i} className="h-80 bg-surface-alt rounded-card animate-pulse" />
               ))}
             </div>
           ) : products.length === 0 ? (
-            <div className="bg-white rounded-2xl border border-slate-200/80 p-12 text-center space-y-4">
-              <div className="w-16 h-16 bg-slate-100 text-slate-400 rounded-2xl flex items-center justify-center mx-auto">
-                <PackageX className="w-8 h-8" />
-              </div>
-              <h3 className="text-lg font-bold text-slate-800">No matching products found</h3>
-              <p className="text-xs text-slate-500 max-w-sm mx-auto">
-                We couldn't find any products matching your active filters. Try adjusting price ranges, category, or search keywords.
+            <div className="bg-surface-alt rounded-card p-12 text-center space-y-4">
+              <PackageOpen className="w-10 h-10 text-ink-muted mx-auto" />
+              <h3 className="text-lg font-semibold text-ink">No matching products found</h3>
+              <p className="text-sm text-ink-muted max-w-sm mx-auto">
+                Try clearing one or more filters to discover more items in our catalog.
               </p>
-              <button
+              <Button
+                variant="secondary"
+                size="sm"
                 onClick={handleResetFilters}
-                className="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white text-xs font-bold rounded-xl transition-colors"
               >
-                Clear All Filters
-              </button>
+                Clear all filters
+              </Button>
             </div>
           ) : (
             <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-6">
@@ -219,4 +225,3 @@ const ProductsPage = () => {
 };
 
 export default ProductsPage;
-

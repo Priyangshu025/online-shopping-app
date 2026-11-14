@@ -1,79 +1,75 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { ShoppingBag, ArrowLeft, Trash2 } from 'lucide-react';
+import { ShoppingBag, ArrowLeft } from 'lucide-react';
 import { useCart } from '../context/CartContext';
 import CartItem from '../components/cart/CartItem';
 import PriceSummary from '../components/cart/PriceSummary';
+import LinkButton from '../components/ui/LinkButton';
 
 const CartPage = () => {
   const { items, clearCart } = useCart();
 
   if (items.length === 0) {
     return (
-      <div className="max-w-4xl mx-auto px-4 py-20 text-center space-y-6">
-        <div className="w-20 h-20 bg-blue-50 text-blue-600 rounded-3xl flex items-center justify-center mx-auto shadow-inner">
-          <ShoppingBag className="w-10 h-10" />
+      <div className="container-page py-24 sm:py-32 text-center space-y-6">
+        <div className="w-16 h-16 rounded-full bg-surface-alt border border-line flex items-center justify-center mx-auto text-ink-muted">
+          <ShoppingBag className="w-7 h-7" />
         </div>
-        <div>
-          <h2 className="text-2xl font-black text-slate-900">Your Shopping Cart is Empty</h2>
-          <p className="text-sm text-slate-500 mt-2 max-w-sm mx-auto">
-            Looks like you haven't added any products to your cart yet. Explore our top tech deals and headphones!
+        <div className="space-y-2">
+          <h1 className="text-3xl sm:text-4xl font-semibold text-ink tracking-tight">Your bag is empty.</h1>
+          <p className="text-sm text-ink-muted max-w-sm mx-auto">
+            Free shipping on all orders over ₹1,000. Discover top audio, displays, and gear.
           </p>
         </div>
         <div>
-          <Link
-            to="/products"
-            className="inline-flex items-center gap-2 px-6 py-3.5 bg-blue-600 hover:bg-blue-700 text-white font-bold text-sm rounded-2xl shadow-lg shadow-blue-500/25 transition-all"
-          >
-            <ArrowLeft className="w-4 h-4" />
-            <span>Start Shopping Now</span>
-          </Link>
+          <LinkButton to="/products" variant="primary" size="md">
+            Continue shopping
+          </LinkButton>
         </div>
       </div>
     );
   }
 
   return (
-    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-8">
+    <div className="container-page py-10 sm:py-16 space-y-8">
       
-      {/* Title & Clear Action */}
-      <div className="flex items-center justify-between pb-4 border-b border-slate-200">
+      {/* Title & Empty Cart Action */}
+      <div className="flex items-end justify-between pb-6 border-b border-line/60">
         <div>
-          <h1 className="text-2xl sm:text-3xl font-black text-slate-900 tracking-tight">Shopping Cart</h1>
-          <p className="text-xs text-slate-500 mt-1">Review your items before proceeding to secure payment</p>
+          <h1 className="text-3xl sm:text-4xl font-semibold text-ink tracking-tight">Review your bag.</h1>
+          <p className="text-xs sm:text-sm text-ink-muted mt-1">Free express delivery and 7-day returns on every order.</p>
         </div>
 
         <button
           onClick={clearCart}
-          className="text-xs text-slate-400 hover:text-rose-600 flex items-center gap-1.5 transition-colors font-medium"
+          className="text-xs text-ink-muted hover:text-danger transition-colors font-medium"
         >
-          <Trash2 className="w-3.5 h-3.5" />
-          <span>Empty Cart</span>
+          Remove all
         </button>
       </div>
 
       {/* Cart Grid */}
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 items-start">
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14 items-start">
         
         {/* Cart Items List */}
-        <div className="lg:col-span-2 space-y-3">
+        <div className="lg:col-span-7 divide-y divide-line/60">
           {items.map((item) => (
             <CartItem key={item.productId} item={item} />
           ))}
 
-          <div className="pt-4">
+          <div className="pt-6">
             <Link
               to="/products"
-              className="inline-flex items-center gap-2 text-xs font-bold text-blue-600 hover:text-blue-700"
+              className="text-sm font-medium text-accent hover:underline inline-flex items-center gap-1"
             >
               <ArrowLeft className="w-4 h-4" />
-              <span>Continue Shopping</span>
+              <span>Continue shopping</span>
             </Link>
           </div>
         </div>
 
-        {/* Price Breakdown Sidebar */}
-        <div className="lg:col-span-1">
+        {/* Summary Card */}
+        <div className="lg:col-span-5">
           <PriceSummary showCheckoutBtn={true} />
         </div>
 
@@ -84,4 +80,3 @@ const CartPage = () => {
 };
 
 export default CartPage;
-

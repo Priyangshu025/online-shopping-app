@@ -1,26 +1,24 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { ArrowRight, Sparkles, TrendingUp, ShieldCheck, Zap, Star } from 'lucide-react';
+import { ArrowRight, ChevronRight, Truck, ShieldCheck, RefreshCw, Sparkles } from 'lucide-react';
 import api from '../services/api';
 import ProductCard from '../components/product/ProductCard';
+import Section from '../components/ui/Section';
+import LinkButton from '../components/ui/LinkButton';
 
 const HomePage = () => {
   const [featuredProducts, setFeaturedProducts] = useState([]);
-  const [categories, setCategories] = useState([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const [prodRes, filterMetaRes] = await Promise.all([
-          api.get('/products?isFeatured=true'),
-          api.get('/products/meta/filters'),
-        ]);
-
-        if (prodRes.success) setFeaturedProducts(prodRes.data.slice(0, 8));
-        if (filterMetaRes.success) setCategories(filterMetaRes.data.categories || []);
+        const res = await api.get('/products?isFeatured=true');
+        if (res.success) {
+          setFeaturedProducts(res.data.slice(0, 8));
+        }
       } catch (err) {
-        console.error('Failed to load home page data:', err);
+        console.error('Failed to load home page products:', err);
       } finally {
         setLoading(false);
       }
@@ -28,139 +26,143 @@ const HomePage = () => {
     fetchData();
   }, []);
 
-  const categoryVisuals = [
-    { name: 'Audio', image: 'https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=500', desc: 'Headphones & ANC' },
-    { name: 'Electronics', image: 'https://images.unsplash.com/photo-1516035069371-29a1b244cc32?w=500', desc: 'Cameras & Tech' },
-    { name: 'Computers & Accessories', image: 'https://images.unsplash.com/photo-1527864550417-7fd91fc51a46?w=500', desc: 'Workstation Gear' },
-    { name: 'Wearables', image: 'https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=500', desc: 'Smartwatches' },
-    { name: 'Fashion & Lifestyle', image: 'https://images.unsplash.com/photo-1553062407-98eeb64c6a62?w=500', desc: 'Gear & Bags' },
+  const categories = [
+    {
+      name: 'Audio',
+      desc: 'Noise-cancelling headphones & earbuds',
+      image: 'https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=500&auto=format&fit=crop&q=80',
+      path: '/products?category=Audio',
+    },
+    {
+      name: 'Electronics',
+      desc: 'Cameras, lenses & creator accessories',
+      image: 'https://images.unsplash.com/photo-1516035069371-29a1b244cc32?w=500&auto=format&fit=crop&q=80',
+      path: '/products?category=Electronics',
+    },
+    {
+      name: 'Computers & Accessories',
+      desc: 'Mechanical keyboards, 4K displays & mice',
+      image: 'https://images.unsplash.com/photo-1527864550417-7fd91fc51a46?w=500&auto=format&fit=crop&q=80',
+      path: '/products?category=Computers%20%26%20Accessories',
+    },
+    {
+      name: 'Wearables',
+      desc: 'Health sensors & premium smartwatches',
+      image: 'https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=500&auto=format&fit=crop&q=80',
+      path: '/products?category=Wearables',
+    },
   ];
 
   return (
-    <div className="space-y-16 sm:space-y-24">
+    <div className="w-full">
       
-      {/* Hero Banner */}
-      <section className="relative overflow-hidden bg-slate-950 text-white rounded-3xl mx-4 sm:mx-6 lg:mx-8 mt-4 sm:mt-6">
-        <div className="absolute inset-0 bg-gradient-to-r from-blue-950/90 via-slate-900/80 to-transparent z-10" />
-        <img
-          src="https://images.unsplash.com/photo-1550009158-9ebf69173e03?w=1600&auto=format&fit=crop&q=80"
-          alt="Modern electronics banner"
-          className="absolute inset-0 w-full h-full object-cover object-center opacity-40 mix-blend-overlay"
-        />
-
-        <div className="relative z-20 max-w-7xl mx-auto px-6 sm:px-12 py-16 sm:py-24 lg:py-32 flex flex-col items-start space-y-6">
-          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-blue-500/20 text-blue-300 border border-blue-500/30 text-xs font-semibold tracking-wide backdrop-blur">
-            <Sparkles className="w-3.5 h-3.5 text-blue-400" />
-            <span>Next-Generation E-Commerce Experience</span>
-          </div>
-
-          <h1 className="text-3xl sm:text-5xl lg:text-6xl font-black tracking-tight leading-tight max-w-2xl">
-            Upgrade Your Digital Lifestyle with <span className="bg-gradient-to-r from-blue-400 to-indigo-300 bg-clip-text text-transparent">ShopNova</span>
-          </h1>
-
-          <p className="text-slate-300 text-sm sm:text-base max-w-xl leading-relaxed">
-            Discover precision-engineered headphones, high-refresh displays, mechanical keyboards, and top smart wearables with verified reviews and express India delivery.
+      {/* Light, Spacious Centered Hero */}
+      <section className="pt-16 pb-16 sm:pt-24 sm:pb-20 bg-surface">
+        <div className="container-page flex flex-col items-center text-center space-y-6">
+          
+          <p className="text-xs sm:text-sm font-semibold tracking-wider text-accent uppercase">
+            ShopNova Series
           </p>
 
-          <div className="flex flex-wrap items-center gap-4 pt-2">
-            <Link
-              to="/products"
-              className="px-6 py-3.5 bg-blue-600 hover:bg-blue-500 text-white text-sm font-bold rounded-2xl shadow-lg shadow-blue-600/30 transition-all flex items-center gap-2 active:scale-95"
-            >
-              <span>Explore All Products</span>
-              <ArrowRight className="w-4 h-4" />
-            </Link>
+          <h1 className="max-w-3xl text-4xl sm:text-6xl font-semibold tracking-tight text-ink leading-[1.08]">
+            Pro sound. Intelligent gear. Pure design.
+          </h1>
 
+          <p className="max-w-xl text-base sm:text-lg text-ink-muted leading-relaxed font-normal">
+            Precision-engineered headphones, mechanical workstation peripherals, and personal technology crafted for focus.
+          </p>
+
+          <div className="flex items-center gap-4 pt-2">
+            <LinkButton to="/products" variant="primary" size="md">
+              Shop now
+            </LinkButton>
             <Link
               to="/products?category=Audio"
-              className="px-6 py-3.5 bg-white/10 hover:bg-white/20 text-white text-sm font-bold rounded-2xl border border-white/20 backdrop-blur transition-all"
+              className="text-sm sm:text-base font-medium text-accent hover:underline inline-flex items-center gap-1"
             >
-              Browse Audio Gear
+              <span>Explore audio</span>
+              <ChevronRight className="w-4 h-4" />
             </Link>
           </div>
 
-          <div className="pt-6 flex items-center gap-6 text-xs text-slate-400 border-t border-white/10">
-            <div>
-              <p className="font-extrabold text-white text-base">100%</p>
-              <p>Genuine Brands</p>
-            </div>
-            <div className="h-8 w-px bg-white/10" />
-            <div>
-              <p className="font-extrabold text-white text-base">2-Day</p>
-              <p>Express Dispatch</p>
-            </div>
-            <div className="h-8 w-px bg-white/10" />
-            <div>
-              <p className="font-extrabold text-white text-base">4.9 ★</p>
-              <p>Customer Satisfaction</p>
+          {/* Hero Showcase Image */}
+          <div className="w-full max-w-4xl pt-10 sm:pt-14">
+            <div className="relative aspect-[16/9] w-full rounded-card overflow-hidden bg-surface-alt border border-line/60 flex items-center justify-center p-6 sm:p-12">
+              <img
+                src="https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=1200&auto=format&fit=crop&q=85"
+                alt="Sony WH-1000XM5 Premium Audio"
+                className="w-full h-full object-contain filter drop-shadow-xl"
+              />
             </div>
           </div>
+
         </div>
       </section>
 
-      {/* Category Grid Section */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-end justify-between mb-8">
-          <div>
-            <p className="text-xs font-bold text-blue-600 uppercase tracking-widest">Collections</p>
-            <h2 className="text-2xl sm:text-3xl font-black text-slate-900 tracking-tight">Shop by Category</h2>
-          </div>
-          <Link
-            to="/products"
-            className="text-xs sm:text-sm font-bold text-blue-600 hover:text-blue-700 flex items-center gap-1 transition-colors"
-          >
-            <span>View All</span>
-            <ArrowRight className="w-4 h-4" />
-          </Link>
+      {/* Featured Categories on soft grey bg-surface-alt */}
+      <Section alt id="categories">
+        <div className="flex flex-col items-center text-center mb-12 space-y-2">
+          <h2 className="text-2xl sm:text-4xl font-semibold text-ink tracking-tight">
+            Explore by category.
+          </h2>
+          <p className="text-sm sm:text-base text-ink-muted max-w-md">
+            Purpose-built technology tailored to every moment of your creative flow.
+          </p>
         </div>
 
-        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-4">
-          {categoryVisuals.map((cat) => (
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+          {categories.map((cat) => (
             <Link
               key={cat.name}
-              to={`/products?category=${encodeURIComponent(cat.name)}`}
-              className="group relative h-48 rounded-2xl overflow-hidden bg-slate-900 border border-slate-200/80 shadow-sm hover:shadow-lg transition-all"
+              to={cat.path}
+              className="group flex flex-col rounded-card bg-surface p-6 border border-line/50 transition duration-200 hover:-translate-y-1 hover:shadow-lift"
             >
-              <img
-                src={cat.image}
-                alt={cat.name}
-                className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500 opacity-70 group-hover:opacity-80"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/40 to-transparent" />
-              <div className="absolute bottom-3 left-3 right-3 text-white">
-                <p className="text-[11px] text-blue-300 font-medium">{cat.desc}</p>
-                <h3 className="font-bold text-sm leading-snug group-hover:text-blue-200 transition-colors">
-                  {cat.name}
-                </h3>
+              <div className="aspect-square w-full rounded-xl bg-surface-alt overflow-hidden p-6 flex items-center justify-center mb-4">
+                <img
+                  src={cat.image}
+                  alt={cat.name}
+                  className="w-full h-full object-contain transition-transform duration-300 group-hover:scale-105"
+                  loading="lazy"
+                />
               </div>
+              <h3 className="text-base font-semibold text-ink group-hover:text-accent transition-colors">
+                {cat.name}
+              </h3>
+              <p className="text-xs text-ink-muted mt-1 leading-snug">
+                {cat.desc}
+              </p>
+              <span className="text-xs font-medium text-accent mt-4 inline-flex items-center gap-1">
+                Browse collection <ChevronRight className="w-3.5 h-3.5" />
+              </span>
             </Link>
           ))}
         </div>
-      </section>
+      </Section>
 
-      {/* Featured Products Section */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-end justify-between mb-8">
-          <div>
-            <div className="flex items-center gap-2 text-xs font-bold text-blue-600 uppercase tracking-widest">
-              <Zap className="w-3.5 h-3.5 fill-blue-600" />
-              <span>Trending & Handpicked</span>
-            </div>
-            <h2 className="text-2xl sm:text-3xl font-black text-slate-900 tracking-tight">Featured Products</h2>
+      {/* Featured / Handpicked Products on clean white bg-surface */}
+      <Section id="featured">
+        <div className="flex flex-col sm:flex-row sm:items-end justify-between mb-12 gap-4">
+          <div className="space-y-1">
+            <h2 className="text-2xl sm:text-4xl font-semibold text-ink tracking-tight">
+              Handpicked. Engineered to last.
+            </h2>
+            <p className="text-sm text-ink-muted">
+              Explore our highest-rated hardware and verified customer favorites.
+            </p>
           </div>
           <Link
             to="/products"
-            className="text-xs sm:text-sm font-bold text-blue-600 hover:text-blue-700 flex items-center gap-1 transition-colors"
+            className="text-sm font-medium text-accent hover:underline inline-flex items-center gap-1 self-start sm:self-auto"
           >
-            <span>See All Listings</span>
-            <ArrowRight className="w-4 h-4" />
+            <span>View all products</span>
+            <ChevronRight className="w-4 h-4" />
           </Link>
         </div>
 
         {loading ? (
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
             {[...Array(4)].map((_, i) => (
-              <div key={i} className="h-80 bg-slate-100 rounded-2xl animate-pulse"></div>
+              <div key={i} className="h-80 bg-surface-alt rounded-card animate-pulse" />
             ))}
           </div>
         ) : (
@@ -170,41 +172,31 @@ const HomePage = () => {
             ))}
           </div>
         )}
-      </section>
+      </Section>
 
-      {/* Promotional Callout Banner */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="bg-gradient-to-r from-blue-600 to-indigo-700 rounded-3xl p-8 sm:p-12 text-white shadow-xl relative overflow-hidden flex flex-col md:flex-row items-center justify-between gap-8">
-          <div className="space-y-3 z-10 max-w-lg">
-            <span className="bg-white/20 text-white text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider">
-              Student Special Offer
+      {/* Quiet Promotional Notice Block */}
+      <Section alt className="py-12 sm:py-16">
+        <div className="max-w-3xl mx-auto rounded-card bg-surface p-8 sm:p-10 border border-line/60 flex flex-col sm:flex-row items-center justify-between gap-6 text-center sm:text-left">
+          <div className="space-y-1">
+            <span className="text-xs font-semibold text-accent uppercase tracking-wider">
+              Special Welcome Promotion
             </span>
-            <h3 className="text-2xl sm:text-3xl font-black">
-              Save Flat 10% on Your First Order!
+            <h3 className="text-xl sm:text-2xl font-semibold text-ink">
+              10% off your initial purchase.
             </h3>
-            <p className="text-blue-100 text-sm leading-relaxed">
-              Use promo coupon <strong className="text-white bg-black/30 px-2 py-0.5 rounded font-mono">WELCOME10</strong> at checkout to get an instant discount. Free express delivery included.
+            <p className="text-xs sm:text-sm text-ink-muted">
+              Apply code <span className="font-mono text-ink font-semibold bg-surface-alt px-2 py-0.5 rounded">WELCOME10</span> at checkout. Free express shipping included.
             </p>
           </div>
 
-          <div className="z-10 flex-shrink-0">
-            <Link
-              to="/products"
-              className="px-6 py-3.5 bg-white text-blue-700 hover:bg-blue-50 font-extrabold text-sm rounded-2xl shadow-lg transition-all active:scale-95 inline-block"
-            >
-              Shop Now With Promo
-            </Link>
-          </div>
-
-          {/* Decorative glow circles */}
-          <div className="absolute -right-10 -bottom-10 w-64 h-64 bg-white/10 rounded-full blur-2xl pointer-events-none" />
-          <div className="absolute -left-10 -top-10 w-64 h-64 bg-blue-400/20 rounded-full blur-2xl pointer-events-none" />
+          <LinkButton to="/products" variant="primary" size="sm" className="flex-shrink-0">
+            Shop with code
+          </LinkButton>
         </div>
-      </section>
+      </Section>
 
     </div>
   );
 };
 
 export default HomePage;
-

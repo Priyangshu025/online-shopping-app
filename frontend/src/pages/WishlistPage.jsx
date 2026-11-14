@@ -1,10 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { Heart, ShoppingBag, Trash2, ArrowRight } from 'lucide-react';
+import { Heart, Trash2, ShoppingBag } from 'lucide-react';
 import api from '../services/api';
 import { useWishlist } from '../context/WishlistContext';
 import { useCart } from '../context/CartContext';
 import { useAuth } from '../context/AuthContext';
+import Button from '../components/ui/Button';
+import LinkButton from '../components/ui/LinkButton';
+import Price from '../components/ui/Price';
 
 const WishlistPage = () => {
   const { wishlist, toggleWishlist } = useWishlist();
@@ -39,53 +42,44 @@ const WishlistPage = () => {
 
   if (!isAuthenticated) {
     return (
-      <div className="max-w-md mx-auto px-4 py-20 text-center space-y-4">
-        <div className="w-16 h-16 bg-rose-50 text-rose-500 rounded-2xl flex items-center justify-center mx-auto">
-          <Heart className="w-8 h-8" />
+      <div className="container-page py-24 text-center space-y-4">
+        <div className="w-14 h-14 rounded-full bg-surface-alt border border-line flex items-center justify-center mx-auto text-ink-muted">
+          <Heart className="w-6 h-6" />
         </div>
-        <h2 className="text-xl font-bold text-slate-800">Sign in to view your Wishlist</h2>
-        <p className="text-xs text-slate-500">
-          Save your favourite gadgets, check price drops, and move items to cart anytime.
-        </p>
-        <Link
-          to="/login"
-          className="inline-block px-6 py-2.5 bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs rounded-xl shadow"
-        >
-          Sign In
-        </Link>
+        <div className="space-y-1">
+          <h1 className="text-2xl sm:text-3xl font-semibold text-ink tracking-tight">Your Wishlist</h1>
+          <p className="text-sm text-ink-muted">Sign in to view and save your favorite devices.</p>
+        </div>
+        <LinkButton to="/login" variant="primary" size="sm">
+          Sign in
+        </LinkButton>
       </div>
     );
   }
 
   return (
-    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-8">
+    <div className="container-page py-10 sm:py-16 space-y-8">
       <div>
-        <h1 className="text-2xl sm:text-3xl font-black text-slate-900 tracking-tight">My Wishlist</h1>
-        <p className="text-xs text-slate-500 mt-1">{products.length} items saved for later</p>
+        <h1 className="text-3xl sm:text-4xl font-semibold text-ink tracking-tight">Wishlist</h1>
+        <p className="text-xs sm:text-sm text-ink-muted mt-1">{products.length} {products.length === 1 ? 'item' : 'items'} saved</p>
       </div>
 
       {loading ? (
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
           {[...Array(4)].map((_, i) => (
-            <div key={i} className="h-72 bg-slate-100 rounded-2xl animate-pulse" />
+            <div key={i} className="h-72 bg-surface-alt rounded-card animate-pulse" />
           ))}
         </div>
       ) : products.length === 0 ? (
-        <div className="bg-white rounded-3xl border border-slate-200/80 p-16 text-center space-y-4">
-          <div className="w-16 h-16 bg-rose-50 text-rose-500 rounded-2xl flex items-center justify-center mx-auto">
-            <Heart className="w-8 h-8" />
-          </div>
-          <h3 className="text-lg font-bold text-slate-800">Your Wishlist is Empty</h3>
-          <p className="text-xs text-slate-500 max-w-sm mx-auto">
-            Explore our store and tap the heart icon on any product to save it here for later.
+        <div className="rounded-card bg-surface-alt p-16 text-center space-y-4">
+          <Heart className="w-8 h-8 text-ink-muted mx-auto" />
+          <h2 className="text-lg font-semibold text-ink">No items in your wishlist yet</h2>
+          <p className="text-sm text-ink-muted max-w-sm mx-auto">
+            Tap the heart icon on any product to save it here for later.
           </p>
-          <Link
-            to="/products"
-            className="inline-flex items-center gap-2 px-5 py-2.5 bg-blue-600 hover:bg-blue-700 text-white text-xs font-bold rounded-xl shadow"
-          >
-            <span>Discover Products</span>
-            <ArrowRight className="w-4 h-4" />
-          </Link>
+          <LinkButton to="/products" variant="secondary" size="sm">
+            Browse products
+          </LinkButton>
         </div>
       ) : (
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
@@ -94,47 +88,51 @@ const WishlistPage = () => {
             return (
               <div
                 key={product._id}
-                className="bg-white rounded-2xl border border-slate-200 overflow-hidden shadow-sm flex flex-col justify-between"
+                className="group relative flex flex-col rounded-card bg-surface-alt p-5 border border-line/40 transition hover:-translate-y-1 hover:shadow-lift"
               >
-                <div className="relative aspect-square bg-slate-100">
-                  <Link to={`/products/${product._id}`}>
+                <div className="relative aspect-square rounded-xl bg-white p-4 flex items-center justify-center mb-4">
+                  <Link to={`/products/${product._id}`} className="w-full h-full flex items-center justify-center">
                     <img
                       src={product.images?.[0] || ''}
                       alt={product.name}
-                      className="w-full h-full object-cover"
+                      className="w-full h-full object-contain"
                     />
                   </Link>
                   <button
                     onClick={() => toggleWishlist(product._id)}
-                    className="absolute top-3 right-3 p-2 bg-white/90 text-rose-600 rounded-full shadow hover:bg-white transition-all"
-                    title="Remove from wishlist"
+                    className="absolute top-3 right-3 p-1.5 rounded-full text-ink-muted hover:text-danger bg-white shadow-sm"
+                    aria-label="Remove from wishlist"
                   >
                     <Trash2 className="w-4 h-4" />
                   </button>
                 </div>
 
-                <div className="p-4 space-y-3 flex-1 flex flex-col justify-between">
+                <div className="flex-1 flex flex-col justify-between space-y-3">
                   <div>
-                    <span className="text-[10px] font-bold text-blue-600 uppercase tracking-wider">{product.brand}</span>
-                    <Link to={`/products/${product._id}`} className="block hover:text-blue-600 transition-colors">
-                      <h3 className="text-xs font-bold text-slate-800 line-clamp-2 mt-1">{product.name}</h3>
+                    <p className="text-xs text-ink-muted">{product.brand}</p>
+                    <Link to={`/products/${product._id}`} className="block">
+                      <h3 className="text-sm font-semibold text-ink group-hover:text-accent transition-colors line-clamp-1 mt-0.5">
+                        {product.name}
+                      </h3>
                     </Link>
-                    <p className="text-sm font-extrabold text-slate-900 mt-2">
-                      ₹{activePrice.toLocaleString('en-IN')}
-                    </p>
+                    <div className="pt-2">
+                      <Price value={activePrice} old={product.discountPrice > 0 ? product.price : null} size="sm" />
+                    </div>
                   </div>
 
-                  <button
+                  <Button
+                    size="sm"
+                    variant="primary"
                     onClick={() => {
                       addToCart(product, 1);
                       toggleWishlist(product._id);
                     }}
                     disabled={product.stock <= 0}
-                    className="w-full py-2 px-3 bg-blue-600 hover:bg-blue-700 disabled:opacity-50 text-white font-bold text-xs rounded-xl shadow flex items-center justify-center gap-1.5 transition-colors"
+                    className="w-full text-xs"
                   >
                     <ShoppingBag className="w-3.5 h-3.5" />
-                    <span>Move to Cart</span>
-                  </button>
+                    <span>Move to bag</span>
+                  </Button>
                 </div>
               </div>
             );
@@ -146,4 +144,3 @@ const WishlistPage = () => {
 };
 
 export default WishlistPage;
-

@@ -1,27 +1,19 @@
 import React from 'react';
 
-const StatCard = ({ title, value, icon: Icon, change, trend = 'up', color = 'blue' }) => {
-  const colorMap = {
-    blue: 'bg-blue-50 text-blue-600',
-    indigo: 'bg-indigo-50 text-indigo-600',
-    emerald: 'bg-emerald-50 text-emerald-600',
-    amber: 'bg-amber-50 text-amber-600',
-    rose: 'bg-rose-50 text-rose-600',
-  };
-
+const StatCard = ({ title, value, icon: Icon, change, trend = 'up' }) => {
   return (
-    <div className="bg-white p-5 rounded-2xl border border-slate-200/80 shadow-sm flex items-start justify-between">
+    <div className="bg-surface p-6 rounded-card border border-line/60 flex items-start justify-between">
       <div className="space-y-1">
-        <p className="text-xs font-semibold uppercase tracking-wider text-slate-400">{title}</p>
-        <p className="text-2xl font-black text-slate-800">{value}</p>
+        <p className="text-xs font-semibold text-ink-muted uppercase tracking-wider">{title}</p>
+        <p className="text-2xl font-semibold text-ink">{value}</p>
         {change && (
-          <p className={`text-xs font-medium ${trend === 'up' ? 'text-emerald-600' : 'text-rose-600'}`}>
+          <p className={`text-xs font-medium ${trend === 'up' ? 'text-success' : 'text-danger'}`}>
             {change}
           </p>
         )}
       </div>
 
-      <div className={`p-3 rounded-2xl ${colorMap[color] || colorMap.blue}`}>
+      <div className="p-2.5 rounded-xl bg-surface-alt text-ink border border-line/40">
         <Icon className="w-5 h-5" />
       </div>
     </div>
@@ -29,4 +21,3 @@ const StatCard = ({ title, value, icon: Icon, change, trend = 'up', color = 'blu
 };
 
 export default StatCard;
-
