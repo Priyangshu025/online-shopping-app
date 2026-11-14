@@ -23,3 +23,4 @@ export default function Badge({ variant = "neutral", className, children, ...pro
     </span>
   );
 }
+

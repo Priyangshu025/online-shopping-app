@@ -24,3 +24,4 @@ export default function Price({ value = 0, old = null, className, size = "md" })
     </div>
   );
 }
+
